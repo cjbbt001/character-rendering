@@ -1,26 +1,30 @@
-Shader "Char_Standard"
+Shader "Character/Swimsuit URP"
 {
     Properties
     {
-        [Header(BaseInfo)]
-        _BaseMap("BaseMap", 2D) = "white" {}
-        _CompMask("CompMask(RM)", 2D) = "white" {}
-        [Normal] _NormalMap("NormalMap", 2D) = "bump" {}
-        _RoughnessAdjust("Roughness Adjust", Range(-1, 1)) = 0.0
-        _MetalAdjust("Metal Adjust", Range(-1, 1)) = 0.0
-        _SpecShininess("Spec Shininess", Float) = 10
-        [Header(SSS)]
+        [Header(Base Info)]
+        _BaseMap("Base Map", 2D) = "white" {}
+        _CompMask("Mask (R: Skin + Cloth, G: Cloth, B: Emission)", 2D) = "black" {}
+        [Normal] _NormalMap("Normal Map", 2D) = "bump" {}
+        _RoughnessAdjust("Roughness", Range(0, 1)) = 0.4
+        _SpecShininess("Specular Shininess", Float) = 80
+
+        [Header(Skin)]
         _SkinLUT("Skin LUT", 2D) = "white" {}
         _SSSOffset("SSS Offset", Range(-1, 1)) = 0
 
         [Header(IBL)]
-        _EnvMap("Env Map", Cube) = "white" {}
-        _Expose("Expose", Float) = 1.0
+        _EnvMap("Environment Map", Cube) = "white" {}
+        _Expose("Environment Exposure", Float) = 1
 
-        [Toggle(_DIFFUSECHECK_ON)] _DiffuseCheck("Diffuse Check", Float) = 1.0
-        [Toggle(_SPECCHECK_ON)] _SpecCheck("Spec Check", Float) = 1.0
-        [Toggle(_SHCHECK_ON)] _SHCheck("SH Check", Float) = 1.0
-        [Toggle(_IBLCHECK_ON)] _IBLCheck("IBL Check", Float) = 1.0
+        [Header(Emission)]
+        [HDR] _EmissionColor("Emission Color", Color) = (1, 1, 1, 1)
+        _EmissionIntensity("Emission Intensity", Range(0, 10)) = 1
+
+        [Toggle(_DIFFUSECHECK_ON)] _DiffuseCheck("Diffuse", Float) = 1
+        [Toggle(_SPECCHECK_ON)] _SpecCheck("Specular", Float) = 1
+        [Toggle(_SHCHECK_ON)] _SHCheck("Custom SH", Float) = 1
+        [Toggle(_IBLCHECK_ON)] _IBLCheck("IBL", Float) = 1
 
         [HideInInspector] custom_SHAr("Custom SHAr", Vector) = (0, 0, 0, 0)
         [HideInInspector] custom_SHAg("Custom SHAg", Vector) = (0, 0, 0, 0)
@@ -55,10 +59,11 @@ Shader "Char_Standard"
             float4 _BaseMap_ST;
             float4 _EnvMap_HDR;
             half _RoughnessAdjust;
-            half _MetalAdjust;
             half _SpecShininess;
             half _SSSOffset;
             half _Expose;
+            half4 _EmissionColor;
+            half _EmissionIntensity;
             half4 custom_SHAr;
             half4 custom_SHAg;
             half4 custom_SHAb;
@@ -83,6 +88,7 @@ Shader "Char_Standard"
             #pragma shader_feature_local_fragment _SPECCHECK_ON
             #pragma shader_feature_local_fragment _SHCHECK_ON
             #pragma shader_feature_local_fragment _IBLCHECK_ON
+
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
@@ -91,6 +97,7 @@ Shader "Char_Standard"
             #pragma multi_compile_instancing
 
             #define CHARACTER_SKIN_SPECULAR_F0 0.02h
+            #define _SWIMSUIT_MASK_LAYOUT 1
             #include "CharacterBodyForwardPass.hlsl"
             ENDHLSL
         }

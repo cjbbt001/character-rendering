@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: body
-  m_Shader: {fileID: 4800000, guid: 93f1a9626e0da0a428012b9c2c6f3ef4, type: 3}
+  m_Name: frey_body
+  m_Shader: {fileID: 4800000, guid: d1519f1ce8d247af8373669959e75a34, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -28,11 +28,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 53bf2ccc8f56b024fa71d588ca2e3f23, type: 3}
+        m_Texture: {fileID: 2800000, guid: f4f2eb9edcc0a9d40bb16ac31d628202, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CompMask:
-        m_Texture: {fileID: 2800000, guid: f84a97f7ada95584995746354020cd31, type: 3}
+        m_Texture: {fileID: 2800000, guid: 91d8b68cb9911e944b7473ebd3ac2802, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 74ed5217c1a794244ae2ae2cbe5f8b38, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7a353c61f58fb6f4f84f9d3c18e6f0eb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SkinLUT:
@@ -54,21 +54,23 @@ Material:
     m_Ints: []
     m_Floats:
     - _DiffuseCheck: 1
+    - _EmissionIntensity: 1
     - _Expose: 1
     - _IBLCheck: 1
     - _MetalAdjust: 0.1
-    - _RoughnessAdjust: -0.1
+    - _RoughnessAdjust: 0.4
     - _SHCheck: 1
     - _SSSOffset: 0.4
     - _SpecCheck: 1
     - _SpecShininess: 80
     m_Colors:
-    - custom_SHAb: {r: -0.016710479, g: 0.025033223, b: -0.004217164, a: 0.04940695}
-    - custom_SHAg: {r: -0.016665505, g: 0.024923477, b: -0.004209869, a: 0.04570682}
-    - custom_SHAr: {r: -0.01661031, g: 0.024850303, b: -0.0042227074, a: 0.044352274}
-    - custom_SHBb: {r: -0.028784625, g: -0.0015617923, b: -0.0001644735, a: 0.0077874316}
-    - custom_SHBg: {r: -0.029146478, g: -0.0015565794, b: -0.00015725422, a: 0.007805515}
-    - custom_SHBr: {r: -0.029305968, g: -0.0015529701, b: -0.00016648868, a: 0.007804472}
-    - custom_SHC: {r: 0.0009589273, g: 0.0009538829, b: 0.00092243205, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - custom_SHAb: {r: -0.20119084, g: 0.69939333, b: -0.2498744, a: 0.648049}
+    - custom_SHAg: {r: -0.20099078, g: 0.69990516, b: -0.2498155, a: 0.64587593}
+    - custom_SHAr: {r: -0.20094275, g: 0.70008564, b: -0.24985813, a: 0.64573973}
+    - custom_SHBb: {r: -0.2695939, g: -0.31807637, b: -0.2343243, a: 0.20471501}
+    - custom_SHBg: {r: -0.269789, g: -0.31813228, b: -0.23417589, a: 0.20477028}
+    - custom_SHBr: {r: -0.26988018, g: -0.3181182, b: -0.23413403, a: 0.20487092}
+    - custom_SHC: {r: -0.23681681, g: -0.23674239, b: -0.23643714, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

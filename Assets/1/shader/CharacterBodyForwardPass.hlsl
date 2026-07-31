@@ -17,7 +17,6 @@ struct CharacterBodyVaryings
     float3 positionWS : TEXCOORD1;
     half3 normalWS : TEXCOORD2;
     half4 tangentWS : TEXCOORD3;
-    float4 shadowCoord : TEXCOORD4;
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -67,7 +66,7 @@ half3 EvaluateBodyDirectLight(
     half3 directDiffuse = 0.0h;
     #if defined(_DIFFUSECHECK_ON)
         half3 commonDiffuse = NdotL * baseColor * light.color * attenuation;
-        half2 skinUV = half2(saturate(NdotL * attenuation + _SSSOffset), 1.0h);
+        half2 skinUV = half2(saturate(NdotL + _SSSOffset), 1.0h);
         half3 skinLUT = SAMPLE_TEXTURE2D(_SkinLUT, sampler_SkinLUT, skinUV).rgb;
         skinLUT = PositivePow(skinLUT, 2.2h);
         half3 skinDiffuse = skinLUT * baseColor * halfLambert
@@ -104,7 +103,6 @@ CharacterBodyVaryings CharacterBodyVertex(CharacterBodyAttributes input)
     output.normalWS = normalInputs.normalWS;
     output.tangentWS = half4(normalInputs.tangentWS, input.tangentOS.w * GetOddNegativeScale());
     output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
-    output.shadowCoord = GetShadowCoord(positionInputs);
     return output;
 }
 
@@ -115,11 +113,25 @@ half4 CharacterBodyFragment(CharacterBodyVaryings input) : SV_Target
 
     half4 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv);
     half4 compMask = SAMPLE_TEXTURE2D(_CompMask, sampler_CompMask, input.uv);
-    half roughness = saturate(compMask.r + _RoughnessAdjust);
-    half metal = saturate(compMask.g + _MetalAdjust);
-    half skinArea = 1.0h - compMask.b;
-    half3 baseColor = albedo.rgb * (1.0h - metal);
-    half3 specColor = albedo.rgb * metal;
+
+    #if defined(_SWIMSUIT_MASK_LAYOUT)
+        half clothArea = saturate(compMask.g);
+        half skinArea = saturate(compMask.r - clothArea);
+        half roughness = saturate(_RoughnessAdjust);
+        half3 baseColor = albedo.rgb;
+        half3 specColor = albedo.rgb * clothArea;
+        half iblArea = clothArea;
+        half3 emission = albedo.rgb * _EmissionColor.rgb
+            * compMask.b * _EmissionIntensity;
+    #else
+        half roughness = saturate(compMask.r + _RoughnessAdjust);
+        half metal = saturate(compMask.g + _MetalAdjust);
+        half skinArea = 1.0h - compMask.b;
+        half3 baseColor = albedo.rgb * (1.0h - metal);
+        half3 specColor = albedo.rgb * metal;
+        half iblArea = 1.0h - skinArea;
+        half3 emission = 0.0h;
+    #endif
 
     half3 normalTS = UnpackNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, input.uv));
     half3 normalWS = NormalizeNormalPerPixel(input.normalWS);
@@ -129,7 +141,9 @@ half4 CharacterBodyFragment(CharacterBodyVaryings input) : SV_Target
         normalTS, half3x3(tangentWS, bitangentWS, normalWS)));
     half3 viewDirectionWS = GetWorldSpaceNormalizeViewDir(input.positionWS);
 
-    Light mainLight = GetMainLight(input.shadowCoord);
+    float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS);
+    Light mainLight = GetMainLight(shadowCoord);
+
     half3 directLighting = EvaluateBodyDirectLight(
         mainLight, normalWS, viewDirectionWS, baseColor, specColor, roughness, skinArea);
 
@@ -160,10 +174,11 @@ half4 CharacterBodyFragment(CharacterBodyVaryings input) : SV_Target
             _EnvMap, sampler_EnvMap, reflectionDirection, perceptualRoughness * 6.0h);
         half3 environment = DecodeHDREnvironment(encodedEnvironment, _EnvMap_HDR);
         indirectSpecular = environment * _Expose * specColor
-            * halfLambert * (1.0h - skinArea);
+            * halfLambert * iblArea;
     #endif
 
-    half3 finalColor = directLighting + indirectDiffuse + indirectSpecular;
+    half3 finalColor = directLighting + indirectDiffuse
+        + indirectSpecular + emission;
     return half4(CharacterACES(finalColor), 1.0h);
 }
 

@@ -9,7 +9,6 @@ Shader "test"
         _RoughnessAdjust("Roughness Adjust", Range(-1, 1)) = 0.0
         _MetalAdjust("Metal Adjust", Range(-1, 1)) = 0.0
         _SpecShininess("Spec Shininess", Float) = 10
-
         [Header(SSS)]
         _SkinLUT("Skin LUT", 2D) = "white" {}
         _SSSOffset("SSS Offset", Range(-1, 1)) = 0
@@ -84,7 +83,6 @@ Shader "test"
             #pragma shader_feature_local_fragment _SPECCHECK_ON
             #pragma shader_feature_local_fragment _SHCHECK_ON
             #pragma shader_feature_local_fragment _IBLCHECK_ON
-
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
