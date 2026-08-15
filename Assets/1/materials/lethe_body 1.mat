@@ -60,7 +60,7 @@ Material:
     - _MetalAdjust: 0
     - _RoughnessAdjust: 0.612
     - _SHCheck: 1
-    - _SSSOffset: 0.52
+    - _SSSOffset: 0.71
     - _SpecCheck: 1
     - _SpecShininess: 80
     m_Colors:

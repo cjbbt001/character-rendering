@@ -51,13 +51,13 @@ Material:
     - _SpecCheck: 1
     - _SpecNoise1: 1
     - _SpecNoise2: 0.5
-    - _SpecOffset1: -1.05
-    - _SpecOffset2: 0.06
-    - _SpecShininess1: 0.158
-    - _SpecShininess2: 0.07
+    - _SpecOffset1: -0.79
+    - _SpecOffset2: 0.15
+    - _SpecShininess1: 0.115
+    - _SpecShininess2: 0.113
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecColor1: {r: 0.122641504, g: 0.12090601, b: 0.12090601, a: 1}
-    - _SpecColor2: {r: 0.122641504, g: 0.118592024, b: 0.118592024, a: 1}
+    - _SpecColor1: {r: 0.16981131, g: 0.16580632, b: 0.16917251, a: 1}
+    - _SpecColor2: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
