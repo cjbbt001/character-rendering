@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: frey_Hair
-  m_Shader: {fileID: 4800000, guid: b0156eeb38150644081e605fe6b27891, type: 3}
+  m_Shader: {fileID: 4800000, guid: a8c3f2e19d4b6a7e5f0c1d2e3a4b5c6d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -35,11 +35,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
-        m_Texture: {fileID: 8900000, guid: e86260c65af11454283d4500be756be7, type: 3}
+        m_Texture: {fileID: 8900000, guid: 221bf5b98e18c3d4fb915bcdad6a6c28, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 7a353c61f58fb6f4f84f9d3c18e6f0eb, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -51,13 +51,13 @@ Material:
     - _SpecCheck: 1
     - _SpecNoise1: 1
     - _SpecNoise2: 0.5
-    - _SpecOffset1: -1.71
-    - _SpecOffset2: -0.42
-    - _SpecShininess1: 0.158
-    - _SpecShininess2: 0.133
+    - _SpecOffset1: 0.34
+    - _SpecOffset2: -0.08
+    - _SpecShininess1: 0.072
+    - _SpecShininess2: 0.168
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecColor1: {r: 0.122641504, g: 0.12090601, b: 0.12090601, a: 1}
-    - _SpecColor2: {r: 0.122641504, g: 0.118592024, b: 0.118592024, a: 1}
+    - _BaseColor: {r: 0.3490566, g: 0.18605375, b: 0.25279576, a: 1}
+    - _SpecColor1: {r: 0.3679245, g: 0.27941436, b: 0.33198908, a: 1}
+    - _SpecColor2: {r: 0.1792453, g: 0.16656284, b: 0.16656284, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
